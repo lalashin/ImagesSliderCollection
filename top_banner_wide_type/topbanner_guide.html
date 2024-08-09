@@ -1,0 +1,198 @@
+
+
+<!doctype html>
+<html xmlns="//www.w3.org/1999/xhtml">
+<head>
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=euc-kr">
+		
+	
+	
+	<title>탑배너가이드</title>
+<script	src="https://code.jquery.com/jquery-3.1.1.min.js"></script>	
+	
+<style>
+html, body, form, fieldset, input, h1, h2, h3, h4, h5, ul, ol, p, li, dl, dt, dd, th, td, blockquote, q{margin:0; padding:0;}
+/* popup */
+.popup {position:relative; width:680px; color:#606060;}
+.popup .close {position:absolute; top:19px; right:30px;cursor:pointer;}
+.popup h3 {height:41px; margin-bottom:28px; color: #fff; font-style: "돋움체", "DotumChe"; padding:19px 0 0 16px; background:#49546e;}
+.popup .popupContents {padding:0 30px;}
+
+/* tap */	
+.container{
+  width: 620px;
+  margin: 0 auto;
+  padding-bottom: 20px;
+} 
+ul.tabs{
+  margin: 0px;
+  padding: 0px 0px 0px 20px;
+  list-style: none;
+}
+ul.tabs li{
+  background: none;
+  font-size: 12px;
+  border-top: 2px solid #eee;
+	border-right: 2px solid #eee;
+	border-left: 2px solid #eee;
+	border-bottom: 2px solid #eee;
+  display: inline-block;
+  padding: 10px 30px;
+  cursor: pointer;
+} 
+ul.tabs li.current{
+  color: #1c8adb;
+  font-weight: 600;
+  border-top: 2px solid #1c8adb;
+	 border-right: 2px solid #1c8adb;
+	 border-left: 2px solid #1c8adb;
+	 border-bottom: 2px solid #1c8adb;
+	
+}
+.tab-content{
+  display: none;
+  height: 580px; 
+  padding: 20px 10px 10px 10px;
+	
+}
+.tab-content.current{
+  display: inherit;
+}
+
+/* table */
+.commonTable {width:100%; margin-bottom:30px; color:#444; font-size: 12px; border-top:1px solid #fff; border-bottom:1px solid #fff; border-collapse:collapse;}
+.commonTable th {padding:16px 0 11px; font-weight:normal; border-bottom:1px solid #fff; background:#f9f9f9;}
+.commonTable td {padding:11px 0 11px; color:#555; text-align:center; border-bottom:1px solid fff;}
+.commonTable td a {color:#555;}
+.commonTable td.title {padding-left:11px; text-align:left;}
+.commonTable td.title2 {font-weight:bold; color:#606060;}
+
+/*.commonTable td.hue {border-bottom:1px solid #fff; background:#f9f9f9;}*/
+/*.commonTable .end {border-bottom:1px solid #b2b2b2;}*/
+	/*.commonTable .end img {border: 1px solid #e8e8e8;}*/
+	
+.color_cube1_1 { width: 90px; height: 20px; background-color: #2e8de5;font-size: 14px;letter-spacing:2px;color: #fff;text-align: center; padding-top: 5px;}
+.color_cube1_2 { width: 90px; height: 20px; background-color: #154b98;font-size: 14px;letter-spacing:2px;color: #fff;text-align: center; padding-top: 5px;}
+.color_cube2_1 { width: 90px; height: 20px; background-color: #ee5555;font-size: 14px;letter-spacing:2px;color: #fff;text-align: center; padding-top: 5px;}
+.color_cube2_2 { width: 90px; height: 20px; background-color: #e30921;font-size: 14px;letter-spacing:2px;color: #fff;text-align: center; padding-top: 5px;}
+.color_cube3_1 { width: 90px; height: 20px; background-color: #033035;font-size: 14px;letter-spacing:2px;color: #fff;text-align: center; padding-top: 5px;}
+.color_cube3_2 { width: 90px; height: 20px; background-color: #e89024;font-size: 14px;letter-spacing:2px;color: #fff;text-align: center; padding-top: 5px;}	
+	
+.color_tip {width: 620px;  background-color: #f8f8f8; border: 1px solid #eee; font-size: 14px; font-size: 12px;padding: 10px;}
+.color_tip ul.cont { padding: 10px 20px 0px 20px; line-height: 160%; list-style-image : url('img/li-tra-style.png');}
+</style>
+</head>
+	<body>
+		<!-- 600*237 -->
+		<div class="popup">
+			<h3>탑배너 적용 가이드 <font size="2">| TopBanner Use Guide</font></h3>
+			<div class="popupContents">
+				<!-- 색상적용예시 탭바 -->
+				<div class="container">
+ 
+				  <ul class="tabs">
+					<li class="tab-link current" data-tab="tab-1">탑배너 1번 스킨 스타일</li>
+					<li class="tab-link" data-tab="tab-2">탑배너 2번 스킨 스타일</li>
+					<li class="tab-link" data-tab="tab-3">탑배너 3번 스킨 스타일</li>
+				  </ul>
+
+				  <div id="tab-1" class="tab-content current">
+					<!--예시 1-->
+					   <table summary="" class="commonTable">
+							<colgroup>
+								<col width="40%" />
+								<col width="*" />
+							</colgroup>
+							<tbody>
+								<tr>
+								<td colspan="2" class="end"><img src="img/1.jpg" alt=""/></td>
+								</tr>
+								
+
+							</tbody>
+						</table>
+					<!--//예시 1-->  
+					  
+				  </div>
+				  <div id="tab-2" class="tab-content">
+					<!--예시 2-->
+						<table summary="" class="commonTable">
+							<colgroup>
+								<col width="40%" />
+								<col width="*" />
+							</colgroup>
+							<tbody>
+								<tr>
+								<td colspan="2" class="end"><img src="img/2.jpg" alt=""/></td>
+								</tr>
+								
+
+							</tbody>
+						</table>
+						<!--//예시 2-->  
+					  
+				  </div>
+				  <div id="tab-3" class="tab-content">
+				   		<!--예시 3-->
+						   <table summary="" class="commonTable">
+							<colgroup>
+								<col width="40%" />
+								<col width="*" />
+							</colgroup>
+							<tbody>
+								<tr>
+								<td colspan="2" class="end"><img src="img/3.jpg" alt=""/></td>
+								</tr>
+								
+
+							</tbody>
+						</table>
+						<!--//예시 3-->  
+				  </div>
+
+				</div>
+				
+				<!-- //색상적용예시 탭바 -->
+				
+				<table class="color_tip">
+					<tbody>
+						<tr>
+							<td><img src="img/color_tip.png" width="104" height="21" alt="색상적용팁"/></td>
+						</tr>
+						<tr>
+							<td>
+								<ul class="cont">
+									<li>탑배너는 웹사이트의  제일 상단에 위치하기 때문에 <strong>옅은 색상톤(light color tone) 사용을 추천</strong>하지만, 정답이 있는 건 아닙니다. <strong>사용 용도에 따라 디자인 규격에 맞춰서 제작</strong>하신 후 탑배너 공간을 잘 활용하시면 됩니다.</li>
+									<li>다양한 색상코드를 참고하시려면 링크를 누르세요! <a href="" onclick="window.open('/skin/top/color_code.htm','','toolbar=no, location=no, status=no, menubar=no, scrollbars=yes, resizable=no,width=680, height=800, top=70, left=150');return false"><img src="img/color_code.png" style="vertical-align: middle;" alt=""/></a></li>
+								</ul>
+								
+
+							</td>
+						</tr>
+					</tbody>
+				</table>
+				
+			</div>
+			<a  onclick="self.close()" class="close" ><img src="img/btn_close.png" alt="닫기" /></a>
+		</div>
+<script>
+$(document).ready(function(){
+   
+  $('ul.tabs li').click(function(){
+    var tab_id = $(this).attr('data-tab');
+ 
+    $('ul.tabs li').removeClass('current');
+    $('.tab-content').removeClass('current');
+ 
+    $(this).addClass('current');
+    $("#"+tab_id).addClass('current');
+  })
+ 
+})
+	
+</script>
+		
+	</body>
+
+
+</html>

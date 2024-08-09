@@ -1,0 +1,499 @@
+<?php
+if($_SERVER['REMOTE_ADDR']=='61.37.199.229'){
+	include_once $_SERVER["DOCUMENT_ROOT"]."/new/include/connect.php";	
+}else{
+	include_once $_SERVER["DOCUMENT_ROOT"]."/new/include/connect.php";
+}
+
+php_timer();
+if($_COOKIE['admin_menu'] == 'ON') include_once $_SERVER["DOCUMENT_ROOT"]."/Admin_joagift_gift/admin.head.php";
+//20051115 전체 페이지 세팅 하기 위하여 스킨 값 불러옴
+
+$table="AllSKIN_NEW";
+$q = "select num,title,mk,md,meta_tag,site_type, site_array,site_back,cost_color, menu_bgcolor, menu_overcolor,link_color,link_active,link_hover,link_visited,top_set,topbanner, bottombanner, topbanner_img, bottombanner_img, topbanner_url, bottombanner_url, topbanner_target, bottombanner_target, topbanner_bg1, bottombanner_bg1, topbanner_bg2, logo,a_show, a_type,a_set,a_num, a1_num,b_show,b_set,b_num, b1_num,c_show,c_set,c_num, c1_num,d_show,d_set,d_num, d1_num,e_show,e_set,e_num, e1_num,a_opt1,a_opt1_img,a_opt1_url , a_opt1_color,a_opt2,a_opt2_img1,a_opt2_img2, a_opt2_url, a_opt2_color,a_opt2_img3,a_opt3,a_opt3_img, a_opt3_url,a_opt3_color,a_opt4,a_opt4_img,a_opt4_url,a_opt4_color, b_opt1,b_opt1_img,b_opt2,b_opt2_img,d_opt1,d_opt1_img,d_opt2,d_opt2_img,d_opt2_arr,d_opt3_show,e_opt1,e_opt1_img,e_opt2,e_opt2_img,eb_use,lb_html,lb_view,lb_move,rb_html,rb_view,rb_move,sub_ban,rgoods_show,goods_jul,gd_opt,gd_img,cs_opt,cs_img,free_space1,free_space2,free_space3,free_space4,free_space5,free_space6,free_space7,d_opt4_img1,d_opt4_img2,d_opt4_img3,mb_move,top_tel,guide_tel,f_show,f_set,f_num, f1_num, g_show,g_set,g_num,a_opt2_img,a_opt5, a_opt5_url,a_opt5_color, a_opt6, a_opt6_url,a_opt6_color,a_opt7,a_opt7_url,a_opt7_color,a_opt8,a_opt8_url, a_opt8_color,a_opt9,a_opt5_img,a_opt6_img,a_opt7_img,a_opt8_img,a_opt9_img, a_opt1_txt, a_opt2_txt, a_opt3_txt, a_opt4_txt, a_opt5_txt, a_opt6_txt, a_opt7_txt, a_opt8_txt, sc_common, sc_common_head, sc_orderend,sc_joinend, sc_cartend, sc_mcommon,sc_mcommon_head, sc_morderend,sc_mjoinend, sc_mcartend ,way_intro, intro_text, sauptel, chngup_banner_url from $table where domain='$domain'";
+$res = $db->query($q);
+if($row = mysql_fetch_array($res)) {
+	while(list($key,$val) = each($row)) {
+		if($key=="md"){
+			$description = $val;
+		}else{
+			${$key} = $val;
+		}
+	}
+} else {
+	jsMove("joagift.co.kr");
+}
+
+//if(!$site_array) $site_array= 'left';
+
+//if($domain=="giftec.net"){
+	//print_r($site_array);
+//}
+
+if(!$site_array) $site_array= 'center';
+if(!$site_back) $site_back= '#FFFFFF';
+if(!$cost_color) $cost_color= '#FF0000';
+if(!$link_color) $link_color= '#000000';
+if(!$link_active) $link_active= '#000000';
+if(!$link_hover) $link_hover= '#FF0000';
+if(!$link_visited) $link_visited= '#000000';
+
+if(!$menu_bgcolor) $menu_bgcolor= '#6e859d';
+if(!$menu_overcolor) $menu_overcolor= '#d90000';
+
+include $_SERVER["DOCUMENT_ROOT"]."/new/main/main_incx.htm";
+
+if(!$logo)  // 로고 이미지가 없으면 기본이미지 적용
+{
+		$top_main_img = $GLOBALS['joagift_image_path']."/new/skin/top/topskin_${top_set}/top_skin_${top_set}_01.gif";
+}
+else  // 있으면 로고 이미지 불러옴
+{
+		//로고 이미지 플래쉬 인지 파일명으로 확인
+		$file_arr=explode(".","$logo");
+		$file_size=sizeof($file_arr)-1;
+		$file_ext=$file_arr[$file_size];
+		if($file_ext=="swf") $logo_swf="Y";
+
+		$top_main_img = $GLOBALS['joagift_image_path']."/new/Domain/${domain}/user_img/${logo}";
+}
+
+if(!$top_tel)  // 전화 이미지가 없으면 기본이미지 적용
+{
+		$top_tel_img = $GLOBALS['joagift_image_path']."/new/skin/top/topskin_${top_set}/tel_${top_set}.gif";
+}
+else  // 있으면 로고 이미지 불러옴
+{
+		$top_tel_img = $GLOBALS['joagift_image_path']."/new/Domain/${domain}/user_img/${top_tel}";
+}
+/*
+//안쓰는 부분인 듯 한데 계속 불러옴. 문제 있으면 다시 풀음 22-02-21 By Mj
+$list=$db->dbSelect("govx_ordr","where good_name != '' order by sell_date DESC limit 0,100","govx_name,good_name");
+while($row=mysql_fetch_array($list[result])){
+	$govx_name = $row[0];
+	$good_name = $row[1];
+
+	$HTML = $HTML."<table width='160' border='0' cellpadding='2' cellspacing='2'><tr><td>".$govx_name."</td></tr></table>";
+}
+*/
+
+///////////// 접속 도메인 정보  ////////////////////////
+$ss = "select * from AllDomain where domain='".$domain."'";
+$rq = mysql_query($ss);
+if($rq){
+	$domain_info = mysql_fetch_array($rq);
+	$saup2 = $domain_info["saup2"];
+	$saup1 = $domain_info["saup1"];
+	$saup2 = preg_replace("/[^0-9]*/s", "", $saup2);
+	$saup2_txt = "";
+	if($saup2){
+		$saup2_txt = "<span class=bar><a href='#none' onclick=\"window.open('https://www.ftc.go.kr/bizCommPop.do?wrkr_no=".$saup2."', '_blank','toolbar=no,scrollbars=no,resizable=no,top=100,left=500,width=800,height=800');\"><img src='/new/images/bottom/copy_biz.gif'></a></span>";
+	}
+
+	mysql_free_result($rq);
+}
+////////////// 접속 도메인 정보 끝 ////////////////////////
+
+
+//cho basename($_SERVER['PHP_SELF']);
+
+if(basename($_SERVER['PHP_SELF'])=="detail.php"){
+	$title = $goodsInfo["name"];
+}
+
+?>
+
+
+<DOCTYPE html>
+<html lang="ko">
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "//www.w3.org/TR/xhtml1-transitional.dtd">
+<head>
+
+<title><?=$title?></title>
+
+<?if($domain=="joagift.com" || $domain=="joagift.co.kr"){?>
+	<meta name="Author" content="JOAGIFT CO., LTD."/>
+	<meta name="reply-to" content="dev@joagift.com"/>
+	<meta name="generator" content="Copyright JOAGIFT Inc. All rights reserved."/>
+<?}?>
+
+
+
+<meta name="title" content="<?php echo $title;?>">
+<meta name="author" content="<?php echo $title;?>">
+<link rel="canonical" href="<?=$http_set?><?=$domain?>/">
+
+<meta name="keywords" content="<?=$mk?>">
+<meta name="description" content="<?=$description?>">
+<meta name="classification" content="판촉물, 기념품, 선물용품">
+<!--META HTTP-EQUIV="X-UA-Compatible" content="IE=edge,chrome=1"-->
+<meta http-equiv="content-type" content="text/html; charset=euc-kr"/>
+<meta http-equiv="Cache-Control" content="no-cache"/>
+<meta http-equiv="Expires" content="0"/>
+<meta http-equiv="Pragma" content="no-cache"/>
+<meta http-equiv="imagetoolbar" content="no"/>
+<!-- <meta http-equiv="X-UA-Compatible" content="IE=9" /> -->
+<?php
+	//상품 상세 페이지 별 메타 태그 추가 작업 21-10-14 By Mj
+	if($_GET['code']){
+		echo  '<meta property="og:category" content="'.$cid.'">';
+		echo '<meta name="twitter:url" content="'.$http_set.$domain.$_SERVER["REQUEST_URI"].'">';			
+	}		
+	
+?>
+<?=$meta_tag;?>
+
+<link rel="Stylesheet" media="all" href="<?=$GLOBALS['joagift_image_path']?>/new/incx/style.css" type="text/css">
+<style>
+td			{font-size:9pt;font-family:돋움;}
+A:link		{ text-decoration:none; color:<?=$link_color?>;}
+A:visited	{ text-decoration:none; color:<?=$link_visited?>;}
+A:active	{ text-decoration:none; color:<?=$link_active?>;}
+A:hover		{ text-decoration:underline; color:<?=$link_hover?>;}
+</style>
+<style>
+ .thumbnail_div img {
+    max-height: 100%;
+    max-width: 100%;
+}
+.thumbnail_div {
+   text-align:center;
+}
+</style>
+<link rel="Stylesheet" media="all" href="<?=$GLOBALS['joagift_image_path']?>/new/incx/style_new.css?<?=time()?>" type="text/css"> 
+
+<script type="text/javascript" src="<?=$GLOBALS['joagift_image_path']?>/new/incx/jquery-3.5.1.js"></script>
+
+<script type="text/javascript" src="<?=$GLOBALS['joagift_image_path']?>/new/incx/jquery-1.9.1.min.js"></script>
+<script language="JavaScript" src="<?=$GLOBALS['joagift_image_path']?>/new/incx/jsin.js"></script>
+<script language="JavaScript" src="<?=$GLOBALS['joagift_image_path']?>/new/incx/joobject.js"></script>
+<script language = "javascript" src = "<?=$GLOBALS['joagift_image_path']?>/new/incx/common.js"></script>
+
+<!--<SCRIPT language="JavaScript" src="../incx/scroll.js"></SCRIPT>//-->
+<!--[if lt IE 9]>
+		<script src="<?=$GLOBALS['joagift_image_path']?>/incx/IE9.js">IE7_PNG_SUFFIX=".png";</script>
+<![endif]-->
+<script>
+
+if( navigator.userAgent.indexOf( "MSIE 7" ) > 0 && navigator.userAgent.indexOf( "Trident" ) ) {
+    // 호환성 보기 활성화
+	alert('호환성 보기가 켜져있습니다. 사이트 상품이 제대로 보이지 않을수 있습니다.');
+}
+</script>
+<script language="JavaScript">
+<!--
+var address = "//"+"<?=$domain?>";
+var title = "<?=$title?>";
+
+function addFavorites() {
+
+	if(document.all) { // Internet Explorer
+		window.external.AddFavorite(address, title);
+	} else if(window.chrome) {	// Google Chrome
+		alert("Ctrl+D키를 누르시면 즐겨찾기에 추가하실 수 있습니다.");
+	} else if (window.sidebar) {	// Firefox
+		window.sidebar.addPanel(title, address, "");
+	} else if(window.opera && window.print) {	// Opera
+		var elem = document.createElement('a');
+		elem.setAttribute('href',address);
+		elem.setAttribute('title',title);
+		elem.setAttribute('rel','sidebar');
+		elem.click();
+	}else{
+	   if(navigator.appName == 'Netscape' && navigator.userAgent.search('Trident') != -1){	// 익스11
+			window.external.AddFavorite(address, title);
+	   }else{
+	   }
+	}
+}
+// -->
+</script>
+
+<script language="JavaScript">
+<!--
+var KeyUp1=false;
+var MouseUp1=false;
+function Check(){
+	SN=document.SearchForm.search_name.value;
+	CN=document.SearchCode.search_code.value;
+		if(SN) {
+			//location.href="/new/search/name.php?name="+SN;
+			location.href="/new/search/name.php?name="+SN+"&search=1"; // 검색해서 넘어간것 구분하기 위해 search 값 추가
+			return false;
+		} else if(CN) {
+			//location.href="/new/shop/detail.php?code="+CN;
+			location.href="/new/shop/detail.php?code="+CN+"&search=1"; // 검색해서 넘어간것 구분하기 위해 search 값 추가
+			return false;
+		} else {
+			alert('찾고 싶은 상품명이나 코드명을\n입력해 주세요');
+			document.SearchForm.search_name.focus();
+			return false;
+		}
+}
+
+function Check_type2(){
+	SN=document.SearchForm.search_name.value;
+	//CN=document.SearchCode.search_code.value; =>Check() 함수에서 이 부분만 주석처리한 함수임
+		if(SN) {
+			//location.href="/new/search/name.php?name="+SN;
+			location.href="/new/search/name.php?name="+SN+"&search=1"; // 검색해서 넘어간것 구분하기 위해 search 값 추가
+			return false;
+		} else if(CN) {
+			//location.href="/new/shop/detail.php?code="+CN;
+			location.href="/new/shop/detail.php?code="+CN+"&search=1"; // 검색해서 넘어간것 구분하기 위해 search 값 추가
+			return false;
+		} else {
+			alert('찾고 싶은 상품명이나 코드명을\n입력해 주세요');
+			document.SearchForm.search_name.focus();
+			return false;
+		}
+}
+function loginform_clearbg(type) {
+	if (type == "search_name") {
+		document.SearchForm.search_name.style.backgroundImage = '';
+	} else if (type == "search_code") {
+		document.SearchCode.search_code.style.backgroundImage = '';
+	}
+}
+// 폼검색 관련 스크립트
+function NameSearch(){
+	SN=document.SearchForm.search_name.value;
+	if(!SN){
+		alert('상품명을 입력하세요');
+		document.SearchForm.search_name.focus();
+	}else{
+		//location.href="/new/search/name.php?name="+SN;
+		location.href="/new/search/name.php?search=1&name="+SN; // 검색해서 넘어간것 구분하기 위해 search 값 추가
+	}
+}
+// 폼검색 관련 스크립트
+function NameSearch1(){
+	SN=document.SearchForm.search_name.value;
+	if(!SN){
+		alert('상품명을 입력하세요');
+		document.SearchForm.search_name.focus();
+	}else{
+		//location.href="/new/search/name.php?name="+SN;
+		location.href="/new/search/name_test.php?search=1&name="+SN; // 검색해서 넘어간것 구분하기 위해 search 값 추가
+	}
+}
+function CodeSearch(){
+	CN=document.SearchCode.search_code.value;
+	if(!CN){
+		alert('코드명을 입력하세요');
+		document.SearchCode.search_code.focus();
+	}else{
+		//location.href="/new/shop/detail.php?code="+CN;
+		location.href="/new/shop/detail.php?code="+CN+"&search=1"; // 검색해서 넘어간것 구분하기 위해 search 값 추가
+	}
+}
+function CodeSearch1(){
+	CN=document.SearchCode.search_code.value;
+	if(!CN){
+		alert('코드명을 입력하세요');
+		document.SearchCode.search_code.focus();
+	}else{
+		//location.href="/new/shop/detail.php?code="+CN;
+		location.href="/new/shop/detail.php?code="+CN+"&search=1"; // 검색해서 넘어간것 구분하기 위해 search 값 추가
+	}
+}
+//-->
+</script>
+<!-- 구글 리타게팅 광고 김경화 요청 2019.03.15-->
+<?if($domain=="joagift.co.kr" || $domain=="joagift.com"){?>
+<!-- Global site tag (gtag.js) - Google Ads: 756832386 -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=AW-756832386"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'AW-756832386');
+</script>
+<!-- 구글 리타게팅 광고 김경화 요청 2019.03.15-->
+<?}?>
+
+
+<!-- 지점별 공통 스크립트 -->
+<?
+if($sc_common_head){
+	echo $sc_common_head;
+}
+?>
+<!-- 지점별 공통 스크립트 끝-->
+
+<?php /* 어떤 스크립트인지 몰라 일단 주석 처리 21-11-23 By Mj?>
+<script type="text/javascript" src="/js/Tealeaf.js?<?=date("Y-m-d H:i:s",time())?>"> </script>
+<?php */?>
+
+</head>
+
+<body leftmargin="1" topmargin="0" marginwidth="0" marginheight="0" onLoad="start();" style="background-color:transparent;">
+
+<!--삽입-->
+<style>
+.movieeventC {  text-align: center; /*background:#0b0b41 repeat-x; height:61px;*/ width:100%; }
+.movieeventL { text-align: left; /*background:#0b0b41 repeat-x; height:61px;*/ width:100%; }
+.top_banner_area {min-width:1100px;height: 70px; background:#fff; text-align:center; overflow: hidden; position:relative;}
+</style>
+<link href="<?=$GLOBALS['joagift_image_path']?>/new/incx/style_main.css" rel="stylesheet" type="text/css">
+<?php
+
+	if($topbanner=="Y"){
+		$topbanner = true;
+		?>
+		<?
+		if($site_type=="A"){
+			$topbanner_img1 = "/new/images/event/lowprice_old.jpg";
+		}else{
+			$topbanner_img1 = "/new/images/event/lowprice_wide.jpg";
+		}
+		if(!$topbanner_img){
+			$topbanner_img = $topbanner_img1;
+		}else{
+			$topbanner_img = $GLOBALS['joagift_image_path']."/new/Domain/".$domain."/user_img/".$topbanner_img;
+		}
+		$topbanner_url1= "#none;";
+		if(!$topbanner_url){
+			$topbanner_url = $topbanner_url1;
+		}
+
+		$tb_target = "";
+		if($topbanner_target=="Y"){
+			$tb_target = "target='_blank'";
+		}
+		
+		$topbanner_height = "";
+
+		//echo $topbanner_img;
+		///new/Domain/vanillagift.co.kr/user_img/topbanner_img.jpg
+		
+		if(file_exists($_SERVER["DOCUMENT_ROOT"].$topbanner_img) || remoteFileExist($topbanner_img) ){
+			if(remoteFileExist($topbanner_img)){
+			}else{
+				$info = getimagesize($_SERVER["DOCUMENT_ROOT"].$topbanner_img);
+			}
+		}
+
+		if(remoteFileExist($topbanner_img)){
+			$info = getimagesize($topbanner_img);
+		}
+
+
+		if($info[1]){
+			$topbanner_height = $info[1];
+		}
+?>
+<?if($site_array =='left'){?>
+		<div class="movieeventL">
+		<a href="<?=$topbanner_url?>" <?=$tb_target?>><li align=<?=$site_array?>><img src="<?=$topbanner_img?>" width="1000" ></li></a>
+		</div>
+	<?} else {?>
+		<div class="movieeventC">
+		<?if($site_type=="A"){?>
+			<li style="padding-bottom:2px;">
+				<?if($topbanner_url!="#none;"){?>
+					<a href="<?=$topbanner_url?>" <?=$tb_target?>>
+				<?}?>
+						<img src="<?=$topbanner_img?>" width="1000"  border="0" />
+				<?if($topbanner_url!="#none;"){?></a><?}?>
+			</li>
+		<?}else{?>
+			<li style="padding-bottom:2px;">
+				<?if($topbanner_url!="#none;"){?><a href="<?=$topbanner_url?>" <?=$tb_target?>><?}?>
+					  <?
+					  if($topbanner_bg1){
+						$topbanner_bg1_1 = "background: ".$topbanner_bg1;
+					  }else{
+						$topbanner_bg1_1 ="";
+					  }
+											
+					  if($topbanner_height){
+							$tph = "height:".$topbanner_height."px;";
+						}
+
+					  ?>
+					   <div class="top_banner_area" style="<?=$tph?> <?=$topbanner_bg1_1?>">
+							<div style="position: relative; z-index: 2; text-align: center">
+								<img src="<?=$topbanner_img?>" width="1100" border="0" alt="top"/> 
+							</div>
+							<?if($topbanner_bg2){?>
+								<div style="height: <?=$topbanner_height?>px; width: 50%; right: 0px; position: absolute; z-index: 1; top: 0px; background-color: <?=$topbanner_bg2?>">&nbsp;</div>
+							<?}?>
+						</div>		
+
+				<?if($topbanner_url!="#none;"){?></a><?}?>
+			</li>
+
+		<?}?>
+				
+		</div>
+	<?}?>
+<?
+}
+?>
+
+
+<table width=100% cellpadding=0 cellspacing=0 border=0 bgcolor="<?=$site_back?>" id="alltotal_table">
+
+<?php
+	if($_SERVER['HTTP_X_FORWARDED_FOR']=='61.37.199.226' || $_SERVER['HTTP_X_FORWARDED_FOR']=='61.37.199.229'){
+		//top20 사이트 서버 확인 관련 김태영 과장 요청 22-02-17 By Mj
+		if($_SERVER['SERVER_ADDR'] == "172.31.11.3"){
+			echo "top20 : A";
+			//echo $GLOBALS['joagift_image_path'];
+		}elseif($_SERVER['SERVER_ADDR'] == "172.31.10.18"){
+			echo "top20 : B";
+		}
+
+		//신규지점 사이트 서버 확인 관련 김태영 과장 요청 22-03-02 By Mj
+		if($_SERVER['SERVER_ADDR'] == "172.31.11.10"){
+			echo "web_01";
+		}elseif($_SERVER['SERVER_ADDR'] == "172.31.24.228"){
+			echo "web_02";
+		}elseif($_SERVER['SERVER_ADDR'] == "172.31.13.125"){
+			echo "web_03";
+		}
+	}
+
+
+	if($_SERVER["SERVER_ADDR"]=="172.31.9.88"){
+		echo "aws.joagift.com";
+	}elseif($_SERVER["SERVER_ADDR"]=="172.31.15.73"){
+		echo "excel.joagift.com";
+	}
+
+	if($top_set=="0"){
+		
+		include $_SERVER["DOCUMENT_ROOT"]."/new/Domain/${domain}/indextop.php";
+	}else{
+	//echo ${top_set};
+		include $_SERVER["DOCUMENT_ROOT"]."/new/skin/top/topskin_${top_set}.html";
+	}
+
+	$tw = "852";
+
+	if($site_type=="B"){
+		$tw = "1000";
+	}else{
+		$tw = "852";
+	}
+
+	$request_uri = $_SERVER['REQUEST_URI'];
+
+	$strFolderName =explode('/' , $request_uri);
+
+	//$body_table_id = 'id="standard_table"';
+?>
+	<tr>
+		<td>
+			<table width="852" border=0 cellpadding=0 cellspacing=0 alt='body layout' align=<?=$site_array?> bgcolor=ffffff <?=$body_table_id?>>
+			<?php /*스크롤 리뉴얼 220127*/?>
+			<?php 
+				if($_SERVER['REMOTE_ADDR']=='61.37.199.229'){
+					include "../main/gift_scroll.htm";
+				}else{
+					include "../main/gift_scroll.htm";
+				}
+			?>
+	
