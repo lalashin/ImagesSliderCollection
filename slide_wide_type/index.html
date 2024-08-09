@@ -1,0 +1,115 @@
+﻿<!DOCTYPE html>
+<head>
+<style>
+ul,li{list-style:none;}
+
+#A5_SkinSlideBanner {position: relative;}	
+#TopSlider{width:100%; height:420px; border:0px solid #d2d2d2;}
+#TopSlider div{width:100%;height:420px; float:left; visibility:hidden; position:absolute;}
+	
+#top_0{background-color:#fef4d1;}
+#top_1{background-color:#a6d0ff;}
+#top_2{background-color:#f8f6df;}
+#top_3{background-color:#1f0a69;}
+#top_4{background-color:#e2caae;}
+#top_5{background-color:#ff8b98;}
+
+#TopSliderBtn { position: absolute; margin: 0 auto;width:100%; height: 30px; padding: 0px 0px 15px 0px;bottom:0;}
+	
+#ul_btns{ margin: 0 auto; float:left; width:100%; padding: 0px ;border:1px solid #eee; font-size: 14px; color: #444444; background-color: #fff;}
+#ul_btns a{float:left; /*width:16.59%;*/ width: 181px; height: 25px; color: #444444; vertical-align: middle; border-right:1px solid #eee; padding: 5px 0px 0px 0px; text-align: center; text-decoration: none; background-color: #fff;}
+	#ul_btns a:last-child {border-right:none;}
+#ul_btns .on{color: #3b78ce; font-weight: 600;/*border-bottom: 3px solid #3b78ce;*/}
+
+</style>
+
+<script src="http://giftec.net/new/skin/top/topskin_53/js/jquery-1.8.3.min.js"></script>
+
+<script>
+    var intv;
+    var current = 0;
+    var sIdx = 0;
+	var sCnt =  6;
+	
+
+    function startTopSlider() {
+	    intv = setInterval(function () {
+            $("#ul_btns").find("a").eq(current++ % sCnt).click();
+        }, 3000);
+    }
+
+    function setBnr(idx, bnr, allTab, addCls) {
+        $(bnr).css("visibility", "hidden")
+              .eq(idx).css("visibility", "visible");
+        $(allTab).removeClass(addCls);
+        $(allTab).eq(idx).addClass(addCls);
+    }
+
+    $(document).ready(function () {
+	    
+        //set init
+        $("#top_0").css("visibility", "visible");
+        $("#btn_0").addClass("on");
+        startTopSlider();
+		
+		
+		$("#ul_btns").find("a").click(function(){
+			var idx = $(this).attr("id").split("_")[1];
+			setBnr(idx, "#TopSlider > div" , "#ul_btns > a" , "on" );
+			
+		});
+		
+		$("#ul_btns").find("a").mouseover(function(){
+			var idx = $(this).attr("id").split("_")[1];
+			setBnr(idx, "#TopSlider > div" , "#ul_btns > a" , "on" );
+			
+		});
+
+
+        
+    });
+</script>
+
+</head>
+<body>
+<div id="A5_SkinSlideBanner">
+	<div id="TopSlider">
+		<div id="top_0">
+			<center><a href="#"><img src="img/1.jpg"></a></center>
+		</div>
+		<div id="top_1">
+			<center><a href="#"><img src="img/2.jpg"></a></center>
+		</div>
+		<div id="top_2">
+			<center><a href="#"><img src="img/3.jpg"></a></center>
+		</div>
+		<div id="top_3">
+			<center><a href="#"><img src="img/4.jpg"></a></center>
+		</div>
+		<div id="top_4">
+			<center><a href="#"><img src="img/5.jpg"></a></center>
+		</div>
+		<div id="top_5">
+			<center><a href="#"><img src="img/6.jpg"></a></center>
+		</div>
+		
+		
+		
+	</div>
+	<div id="TopSliderBtn">
+		<table align="center" width="1100"><tr><td>
+		<ul id="ul_btns">
+			<a href="#" id="btn_0"><li>바나나세척</li></a>
+			<a href="#" id="btn_1"><li>목돈마련</li></a>
+			<a href="#" id="btn_2"><li>포인트</li></a>
+			<a href="#" id="btn_3"><li>가을신상</li></a>
+			<a href="#" id="btn_4"><li>가을세일</li></a>
+			<a href="#" id="btn_5"><li>라이브쇼핑</li></a>
+		</ul>
+		</td></tr></table>
+	</div>
+	
+</div>	
+</body>
+</html>
+
